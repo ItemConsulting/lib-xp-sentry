@@ -2,10 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": false,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "target": "es5",
+    "sourceMap": false,
     "allowJs": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -21,6 +19,7 @@
   },
   "exclude": [
     "./build/*",
+    "./util/*"
   ],
   "types": [
     "types"

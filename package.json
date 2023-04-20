@@ -3,15 +3,18 @@
   "version": "0.0.2",
   "description": "Type definitions for lib-sentry",
   "license": "MIT",
-  "private": true,
+  "files": [
+    "*.d.ts",
+    "tsconfig.json"
+  ],
   "scripts": {
     "build:server": "webpack --config webpack.config.js --color",
     "build": "run-p -c build:*",
     "dist:server": "cross-env NODE_ENV=production webpack --config webpack.config.js --color",
     "dist": "run-p -c dist:*",
     "lint": "eslint --fix 'src/**/*.ts'",
-    "prepublishOnly": "tsc --declarationDir build/types --emitDeclarationOnly true --declaration true && cp -r ./build/types/* .",
-    "postpublish": "rm ./*.d.ts && rm -r ./format"
+    "prepublishOnly": "tsc --declarationDir build/types --emitDeclarationOnly true --declaration true  && cp -r ./build/types/src/main/resources/lib/sentry/* .",
+    "postpublish": "rm ./*.d.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
@@ -28,7 +31,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "file-loader": "^6.2.0",
-    "glob": "^10.2.1",
+    "glob": "^8.1.0",
     "html-webpack-plugin": "^5.5.1",
     "prettier": "^2.8.7",
     "ramda": "^0.29.0",
