@@ -7,8 +7,8 @@ plugins {
 
 dependencies {
   compileOnly "com.enonic.xp:lib-admin:${xpVersion}"
-  implementation 'com.github.ua-parser:uap-java:1.5.2'
-  implementation 'io.sentry:sentry:5.5.3'
+  implementation "com.github.ua-parser:uap-java:1.5.4"
+  implementation "io.sentry:sentry:6.17.0"
 }
 
 repositories {
