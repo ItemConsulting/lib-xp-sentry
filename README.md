@@ -2,7 +2,8 @@
 
 Enonic XP Library for enhancing data sent to Sentry.
 
-[![](https://jitpack.io/v/no.item/lib-xp-sentry.svg)](https://jitpack.io/#no.item/lib-xp-sentry)
+[![](https://repo.itemtest.no/api/badge/latest/releases/no/item/lib-xp-sentry)](https://repo.itemtest.no/#/releases/no/item/lib-xp-sentry)
+
 
 <img src="https://github.com/ItemConsulting/lib-xp-sentry/raw/main/docs/icon.svg?sanitize=true" width="150">
 
@@ -14,12 +15,12 @@ To install this library you need to add a new dependency to your app's build.gra
 
 ```groovy
 repositories {
-  maven { url 'https://jitpack.io' }
+  maven { url "https://repo.itemtest.no/releases" }
 }
 
 dependencies {
   include "com.enonic.xp:lib-admin:${xpVersion}"
-  include "no.item:lib-xp-sentry:0.0.1"
+  include "no.item:lib-xp-sentry:0.0.3"
 }
 ```
 
@@ -73,6 +74,8 @@ Deploy locally for testing purposes:
 ./gradlew publishToMavenLocal
 ```
 
-## Deploy to Jitpack
+## Deploy to Maven
 
-Go to the [Jitpack page for lib-xp-sentry](https://jitpack.io/#no.item/lib-xp-sentry) to deploy from Github.
+```bash
+./gradlew publish -P com.enonic.xp.app.production=true
+```

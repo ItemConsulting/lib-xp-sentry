@@ -1,8 +1,13 @@
 import { getVersion } from "/lib/xp/admin";
-const Sentry = Java.type("io.sentry.Sentry");
-const ProtocolUser = Java.type("io.sentry.protocol.User");
-const ProtocolRequest = Java.type("io.sentry.protocol.Request");
-const ProtocolRuntime = Java.type("io.sentry.protocol.SentryRuntime");
+
+declare const Java: {
+  type<A = any>(className: string): A;
+};
+
+export const Sentry = Java.type("io.sentry.Sentry");
+export const ProtocolUser = Java.type("io.sentry.protocol.User");
+export const ProtocolRequest = Java.type("io.sentry.protocol.Request");
+export const ProtocolRuntime = Java.type("io.sentry.protocol.SentryRuntime");
 
 export type Context = Record<string, unknown>;
 export type Primitive = number | string | boolean | symbol | null | undefined;
@@ -42,12 +47,29 @@ interface JavaScope {
 export const SENTRY_TRACE_HEADER = "sentry-trace";
 export const SENTRY_NO_TRACE_ID = "00000000000000000000000000000000";
 
+interface JavaSentryOptions {
+  setDsn(dsn: string): void;
+  setRelease(release: string): void;
+  setDist(release: string): void;
+  setEnableTracing(enableTracing: boolean): void;
+  setSampleRate(sampleRate: number): void;
+  setEnableExternalConfiguration(enableExternalConfiguration: boolean): void;
+  setEnvironment(environment: string): void;
+}
+
 /**
  * Whether the client is enabled or not
  * @return true if its enabled or false otherwise.
  */
 export function isEnabled(): boolean {
   return Sentry.isEnabled();
+}
+
+export function init(callback: (opts: JavaSentryOptions) => void, globalHubMode = false): void {
+  Sentry.init((opts: JavaSentryOptions) => {
+    //const config = new SentryOptions(opts);
+    callback(opts);
+  }, globalHubMode);
 }
 
 export function configureScope(callback: (scope: Scope) => void): void {
@@ -68,8 +90,8 @@ export function captureMessage(message: string): string {
   return Sentry.captureMessage(message);
 }
 
-export function captureException(exception: unknown, hint?: string): string {
-  return Sentry.captureException(exception, hint);
+export function captureException(exception: unknown, callback: (scope: JavaScope) => void): string {
+  return Sentry.captureException(exception, callback);
 }
 
 export function clearBreadcrumbs(): void {
@@ -124,6 +146,42 @@ function parseTraceHeaders(config: any): TraceHeader {
 
 export function close(): void {
   Sentry.close();
+}
+
+export class SentryOptions {
+  javaSentryOptions: JavaSentryOptions;
+
+  constructor(javaSentryOptions: JavaSentryOptions) {
+    this.javaSentryOptions = javaSentryOptions;
+  }
+
+  setDsn(dsn: string): void {
+    this.javaSentryOptions.setDist(dsn);
+  }
+
+  setRelease(release: string): void {
+    this.javaSentryOptions.setRelease(release);
+  }
+
+  setDist(release: string): void {
+    this.javaSentryOptions.setDist(release);
+  }
+
+  setEnableTracing(enableTracing: boolean): void {
+    this.javaSentryOptions.setEnableTracing(enableTracing);
+  }
+
+  setSampleRate(sampleRate: number): void {
+    this.javaSentryOptions.setSampleRate(sampleRate);
+  }
+
+  setEnvironment(environment: string): void {
+    this.javaSentryOptions.setEnvironment(environment);
+  }
+
+  setEnableExternalConfiguration(enableExternalConfiguration: boolean): void {
+    this.javaSentryOptions.setEnableExternalConfiguration(enableExternalConfiguration);
+  }
 }
 
 class Scope {
