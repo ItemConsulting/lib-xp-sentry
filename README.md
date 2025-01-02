@@ -4,7 +4,6 @@ Enonic XP Library for enhancing data sent to Sentry.
 
 [![](https://repo.itemtest.no/api/badge/latest/releases/no/item/lib-xp-sentry)](https://repo.itemtest.no/#/releases/no/item/lib-xp-sentry)
 
-
 <img src="https://github.com/ItemConsulting/lib-xp-sentry/raw/main/docs/icon.svg?sanitize=true" width="150">
 
 ## Installation
@@ -26,32 +25,50 @@ dependencies {
 
 ## Usage
 
-```typescript  
-import * as Sentry from "/lib/sentry";
-import { parseUserAgent } from "/lib/sentry/user-agent";
+You can use the `Sentry.init` method to configure the DSN for the Sentry client in your `main.ts` file.
 
-export function parseRequestAndAddToSentry(req: XP.Request): void {
-  const { browser, os, device } = parseUserAgent(req);
+```typescript
+import { Sentry } from "/lib/sentry";
 
-  Sentry.configureScope((scope) => {
-    scope
-      .setTags({
-        branch: req.branch,
-        repositoryId: req.repositoryId,
-      })
-      .setRequest({
-        url: req.url,
-        method: req.method,
-      })
-      .setContext("browser", browser)
-      .setContext("os", os);
+Sentry.init((opts): void => {
+  opts.setDsn("https://public@sentry.example.com/1");
+  opts.setRelease(app.version);
+  opts.setEnvironment(getInstallation());
+});
+```
 
-    if (device.family) {
-      scope.setContext("device", {
-        family: device.family,
-      });
-    }
-  });
+You can use your _/error/error.ts_ to get access to the `Exception` thrown, and send it to Sentry using 
+`Sentry.captureException`.
+
+```typescript
+import { Sentry } from "/lib/sentry";
+import { ScopeCallbackBuilder } from "/lib/sentry/helpers";
+import type { ErrorRequest, Request, Response } from "@enonic-types/core";
+
+export function handleError(err: ErrorRequest): Response {
+  if (err.status !== 404) {
+    reportToSentry(err);
+  }
+
+  return {
+    status: err.status,
+    body: `<h1>${err.status} error</h1>`
+  }
+}
+
+function reportToSentry(err: ErrorRequest): void {
+  try {
+    const req = err.request;
+
+    const callback = new ScopeCallbackBuilder()
+      .setRequest(err.request)
+      .setTag("branch", err.request.branch)
+      .build();
+
+    Sentry.captureException(err.exception, callback);
+  } catch (e) {
+    log.error("Failed to configure Sentry scope", e);
+  }
 }
 ```
 

@@ -1,9 +1,20 @@
-import { Request } from "@item-enonic-types/global/controller";
-const Parser = Java.type("ua_parser.Parser");
+import type { Request } from "@item-enonic-types/global/controller";
 
-export function parseUserAgent(req: Request): UserAgentData {
+declare class ParserConstructor {
+  parse(userAgentHeader: string): UserAgentClient;
+}
+
+const Parser = Java.type<typeof ParserConstructor>("ua_parser.Parser");
+
+export function parseUserAgent(req: Request): UserAgentData | undefined {
+  const userAgentHeader = req.headers["User-Agent"];
+
+  if (!userAgentHeader) {
+    return;
+  }
+
   const uaParser = new Parser();
-  const client: UserAgentClient = uaParser.parse(req.headers["User-Agent"]);
+  const client = uaParser.parse(userAgentHeader);
 
   return {
     browser: {
