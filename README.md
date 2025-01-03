@@ -41,8 +41,7 @@ You can use your _/error/error.ts_ to get access to the `Exception` thrown, and 
 `Sentry.captureException`.
 
 ```typescript
-import { Sentry } from "/lib/sentry";
-import { ScopeCallbackBuilder } from "/lib/sentry/helpers";
+import { Sentry, ScopeCallbackBuilder } from "/lib/sentry";
 import type { ErrorRequest, Request, Response } from "@enonic-types/core";
 
 export function handleError(err: ErrorRequest): Response {
