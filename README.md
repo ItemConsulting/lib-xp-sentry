@@ -58,8 +58,6 @@ export function handleError(err: ErrorRequest): Response {
 
 function reportToSentry(err: ErrorRequest): void {
   try {
-    const req = err.request;
-
     const callback = new ScopeCallbackBuilder()
       .setRequest(err.request)
       .setTag("branch", err.request.branch)

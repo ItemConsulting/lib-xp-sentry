@@ -3,8 +3,11 @@
   "version": "0.0.3",
   "description": "Type definitions for lib-sentry",
   "license": "MIT",
+  "types": "dist/index.d.ts",
   "files": [
-    "*.d.ts",
+    "dist",
+    "README.md",
+    "LICENSE",
     "tsconfig.json"
   ],
   "scripts": {
@@ -13,7 +16,7 @@
     "dist:server": "cross-env NODE_ENV=production webpack --config webpack.config.js --color",
     "dist": "run-p -c dist:*",
     "lint": "eslint --fix 'src/**/*.ts'",
-    "prepublishOnly": "tsc --declarationDir build/types --emitDeclarationOnly true --declaration true  && cp -r ./build/types/src/main/resources/lib/sentry/* .",
+    "prepublishOnly": "tsc --declarationDir build/types --emitDeclarationOnly true --declaration true  && mkdir ./dist && cp -r ./build/types/src/main/resources/lib/sentry/* ./dist",
     "postpublish": "rm ./*.d.ts",
     "release": "npm run build",
     "versioning": "npx changeset version && npm i --package-lock-only && NEW_VERSION=$(node -p \"require('./package.json').version\") && sed -i \"s/version.*/version = ${NEW_VERSION}/\" gradle.properties"

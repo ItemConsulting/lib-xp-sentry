@@ -1,5 +1,7 @@
 import { RequestConstructor, UserConstructor } from "/lib/sentry/protocol";
 
+export { ScopeCallbackBuilder } from "./helpers";
+
 export const Sentry = Java.type<Sentry>("io.sentry.Sentry");
 
 export type Sentry = {
