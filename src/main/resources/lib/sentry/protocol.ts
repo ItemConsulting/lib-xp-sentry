@@ -42,7 +42,7 @@ export declare class RequestConstructor {
   setUrl(url: string): void;
 }
 
-declare class SentryRuntimeConstructor {
+export declare class SentryRuntimeConstructor {
   getName(): string | null;
   getRawDescription(): string | null;
   getVersion(): string | null;

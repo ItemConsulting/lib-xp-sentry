@@ -3,7 +3,7 @@ import { parseUserAgent } from "/lib/sentry/user-agent";
 import { SentryRuntime, Request, User } from "/lib/sentry/protocol";
 import type { Scope, ScopeCallback } from ".";
 import type { User as XPUser } from "@enonic-types/lib-auth";
-import type { Request as XPRequest } from "@item-enonic-types/global/controller";
+import type { Request as XPRequest } from "@enonic-types/core";
 
 export class ScopeCallbackBuilder {
   tags: Record<string, string> = {};

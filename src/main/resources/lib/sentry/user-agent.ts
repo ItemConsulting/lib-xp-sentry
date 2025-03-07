@@ -1,6 +1,6 @@
-import type { Request } from "@item-enonic-types/global/controller";
+import type { Request } from "@enonic-types/core";
 
-declare class ParserConstructor {
+export declare class ParserConstructor {
   parse(userAgentHeader: string): UserAgentClient;
 }
 
