@@ -12,8 +12,11 @@ export class ScopeCallbackBuilder {
   request: XPRequest | null = null;
   user: XPUser | null = null;
 
-  setTag(key: string, value: string): this {
-    this.tags[key] = value;
+  setTag(key: string, value?: string): this {
+    if (value) {
+      this.tags[key] = value;
+    }
+
     return this;
   }
 
