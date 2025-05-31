@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
   include "com.enonic.xp:lib-admin:${xpVersion}"
-  include "no.item:lib-xp-sentry:0.0.3"
+  include "no.item:lib-xp-sentry:0.3.0"
 }
 ```
 
