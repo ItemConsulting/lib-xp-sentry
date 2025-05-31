@@ -1,5 +1,11 @@
 # @item-enonic-types/lib-sentry
 
+## 0.4.0
+
+### Minor Changes
+
+- b4946e9: Set target compatibility to Java 11
+
 ## 0.3.0
 
 ### Minor Changes
