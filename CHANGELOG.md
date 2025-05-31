@@ -1,5 +1,12 @@
 # @item-enonic-types/lib-sentry
 
+## 0.3.0
+
+### Minor Changes
+
+- dde6db0: Use tsup to build project
+- dde6db0: Set XP dependency to 7.12.0
+
 ## 0.2.0
 
 ### Minor Changes
