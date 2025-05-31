@@ -5,8 +5,8 @@ plugins {
   id "com.github.node-gradle.node"  version "7.1.0"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 dependencies {
   compileOnly "com.enonic.xp:lib-admin:${xpVersion}"
